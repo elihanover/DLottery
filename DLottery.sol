@@ -4,49 +4,52 @@ pragma solidity 0.4.19;
 contract DLottery {
 
     // current lotto info
+    address[] public empty;
     address[] public owners;
     uint public lotteryEndTime;
     uint public duration;
-    bool public ended;
-    address public winner;
+    bool public ended; // what would I need an ended for?  guessing i'm gonna need it
 
     // last lotto
-    uint[3] public lastLottoInfo; // winner, pot_size, duration
+    address public lastWinner; // winner, pot_size, duration
+    uint public lastPot;
+    uint public lastDuration;
 
-    /*
-      Intra-Contract Functions
-    */
+    /* Intra-Contract Functions */
     // Contract constructor, called when the contract is deployed
     // When launched, make auctions one day long
     function DLottery() public {
-        commenceLottery(86400); // 86400 seconds in one day
+        commenceLottery(3); // 86400 seconds in one day
     }
 
     // Start lottery in constructor and when each lottery ends
     function commenceLottery(uint durationMinutes) public {
         // reset params
-        winner = ; // reset winner to what?
         duration = durationMinutes;
         lotteryEndTime = now + durationMinutes*60; // set endtime to now + time
-        owners = address[]; // reset owners
+        owners = empty; // reset owners
+    }
+
+    // Called by dapp to check if the auction is over, and
+    //  triggers closeLottery if so
+    function isOver() public {
+        if (now >= lotteryEndTime) {
+            closeLottery();
+        }
     }
 
     // Todo //
     // Called when the lottery end event detected
     function closeLottery() public {
-        // conditions
-        require(now >= lotteryEndTime); // ensure no early call
-        require(!ended); // make sure not already called
-
-        ended = true;
-
         // choose winner
-        uint windex = randint(0, owners.length-1); // PICK RANDOM WINNER TODO
-        winner = owners[windex];
+        uint windex = uint(block.blockhash(block.number-1)) % owners.length; // PICK RANDOM WINNER TODO
+        address winner = owners[windex];
         winner.transfer(owners.length); // send ether to the winner
 
         // update info because lotto closed
-        lastLottoInfo = [winner, owners.length, duration];
+        lastWinner = winner;
+        lastPot = owners.length;
+        lastDuration = duration;
 
         // start new lotto
         commenceLottery(duration);
@@ -55,9 +58,16 @@ contract DLottery {
     /*
       Interface Functions:
     */
-    function getLastLottoData() public returns (uint[3]) {
-        // winner, amount, duration
-        return lastLottoInfo;
+    function getLastWinner() public returns (address) {
+        return lastWinner;
+    }
+
+    function getLastPot() public returns (uint) {
+        return lastPot;
+    }
+
+    function getLastDuration() public returns (uint) {
+        return lastDuration;
     }
 
     function getLottoData() public returns (uint[3]) {
@@ -67,8 +77,6 @@ contract DLottery {
 
     // 1 ticket = 1 wei
     function buyTickets() public payable {
-
-        require(now < lotteryEndTime);
 
         uint tickets = msg.value; // get wei sent
 
