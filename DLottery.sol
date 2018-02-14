@@ -77,16 +77,4 @@ contract DLottery {
             owners.push(msg.sender);
         }
     }
-
-
-    /*
-      Questions:
-        - How do when know when to release funds?
-        - How do we randomly select winner?
-        - How to best unlock winner's winnings?
-
-      Todo:
-        - User voting on lottery params
-    */
-
 }
