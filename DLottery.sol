@@ -5,7 +5,7 @@ contract DLottery {
 
     // current lotto info
     address[] private empty;
-    address[] private owners;
+    address[] public owners;
     uint private lotteryEndBlock;
     uint private duration;
 
@@ -14,12 +14,14 @@ contract DLottery {
     uint private lastPot;
     uint private lastDuration;
     uint private lastEndBlock;
+    uint private allTimeBets;
 
     uint public test;
 
     // Contract constructor, called when the contract is deployed
     // When launched, make auctions one day long
     function DLottery() public {
+        allTimeBets = 0;
         test = 0;
         lastWinner = 1;
         lastPot = 1;
@@ -68,14 +70,21 @@ contract DLottery {
         return lastEndBlock;
     }
 
+    function getAllTimeBets() public returns (uint) {
+        checkClosed();
+        return allTimeBets;
+    }
+
     // 1 ticket = 1 wei
     function buyTickets(uint tickets) public payable returns (uint) {
+        //assert(tickets == msg.value);
         checkClosed();
         //uint tickets = msg.value; // get wei sent
 
         // append users address tickets times
         for (uint i = 0; i < tickets; i++) {
             owners.push(msg.sender);
+            allTimeBets += 1;
         }
         return owners.length;
     }

@@ -10,9 +10,3 @@
   - Uses dapp calls to check whether it should close last lottery, but we want this to work independently ideally.
 - User voting on lottery parameters
 - Atomicity
-
-
-#### Todo:
-1. Test contract
-2. Hook up to interface
-3. Test

@@ -3,17 +3,12 @@ Web3 = require('web3');
 // metamask injects web3
 if (typeof web3 !== 'undefined') {
     web3 = new Web3(Web3.currentProvider);
-    console.log("yes");
+    console.log("existed");
 } else {
     // set the provider you want from Web3.providers
     web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
-    console.log("no");
+    console.log("didn't exist");
 }
-
-console.log('1');
-//console.log(web3.eth.accounts[0]);
-console.log(web3);
-console.log('2');
 
 
 /* Contract Parameters */
@@ -41,6 +36,7 @@ function buyTickets() {
     amount = tickets.innerText;
 
     // then buy that much ether from the account
-    var send = web3.eth.sendTransaction({from: userAddress, to: contractAddress, value: web3.toWei(amount, "wei")});
-    console.log("Just bet " + amount + " wei.")
+    //web3.eth.sendTransaction({from: web3.eth.coinbase, to: contractAddress, value: web3.toWei(amount, "wei")});
+    contractInstance.buyTickets(amount, {from: userAddress, value: amount});
+    console.log(contractInstance.getPotSize.call().toString());
 }
