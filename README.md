@@ -2,12 +2,14 @@
 ### Ethereum-based decentralized lottery (for learning purposes).  Any feedback and advice appreciated.
 
 #### Next:
+- Need to check whether funds match the buy tickets parameter
+- Use updating browser events to update the lottery
 - Randomness in Solidity
-  - Using ____ as a stand-in until better solution
+  - Using block hashes as a stand-in until better solution
 - Handling events and timing
-  - Now uses dapp calls to check whether it should close last lottery, but we want this to work independently ideally.
+  - Uses dapp calls to check whether it should close last lottery, but we want this to work independently ideally.
 - User voting on lottery parameters
-- What if you intend to buy tickets in auction n and it ends up in auction n+1?
+- Atomicity
 
 
 #### Todo:

@@ -1,6 +1,7 @@
 <!-- W3.CSS Template from W3schools.com -->
 <!DOCTYPE html>
 <html>
+<head>
 <title>DLottery</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,6 +10,7 @@
 <style>
 body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 </style>
+</head>
 <body class="w3-light-grey">
 
 <!-- w3-content defines a container for fixed size centered content,
@@ -31,7 +33,7 @@ and is wrapped around the whole page content, except for the footer in this exam
     <div class="w3-container">
       <h3 id="lastWinner"><b>Last Winner:</b></h3>
       <h3 id="lastPot"><b>Last Pot:</b></h3>
-      <h5 id="ended">Ended:</h5>
+      <h5 id="lastEndBlock">Ended:</h5>
       <h5 id="lastDuration">Duration:</h5>
     </div>
   </div>
@@ -43,7 +45,7 @@ and is wrapped around the whole page content, except for the footer in this exam
       <h3><b>Current Lotto</b></h3>
       <h4 id="potSize"><b>Pot:</b></h4>
       <h5 id="duration">Duration:</h5>
-      <h5 id="timeLeft">Time Left:</h5>
+      <h5 id="blocksLeft">Time Left:</h5>
     </div>
   </div>
 
@@ -53,7 +55,7 @@ and is wrapped around the whole page content, except for the footer in this exam
     <div class="w3-container">
       <h3><b>Buy In (in wei)</b></h3>
       <h3><input type="text" id="tickets"></h3>
-      <button onclick="buyTickets()" class="w3-button w3-black w3-disabled w3-padding-large w3-margin-bottom">Buy</button>
+      <button onclick="buyTickets()" class="w3-button w3-black w3-padding-large w3-margin-bottom">Buy</button>
     </div>
   </div>
 <!-- END BLOG ENTRIES -->
@@ -74,5 +76,6 @@ and is wrapped around the whole page content, except for the footer in this exam
 </footer>
 
 </body>
-<script src="dlotto.js"></script>
+<script src="https://cdn.rawgit.com/ethereum/web3.js/develop/dist/web3.js"></script>
+<script type="text/javascript" src="dlotto.js"></script>
 </html>

@@ -8,12 +8,12 @@ contract DLottery {
     address[] private owners;
     uint private lotteryEndBlock;
     uint private duration;
-    bool private ended; // what would I need an ended for?  guessing i'm gonna need it
 
     // last lotto
     address private lastWinner; // winner, pot_size, duration
     uint private lastPot;
     uint private lastDuration;
+    uint private lastEndBlock;
 
     uint public test;
 
@@ -30,6 +30,24 @@ contract DLottery {
     /*
       Interface Functions:
     */
+    function getPotSize() public returns (uint) {
+        checkClosed();
+        return owners.length;
+    }
+
+    // Called by dapp to check if the auction is over, and
+    //  triggers closeLottery if so
+    function getBlocksRemaining() public returns (uint) {
+        checkClosed();
+        return lotteryEndBlock - block.number;
+    }
+
+    // returns duration of this auction in blocks
+    function getDuration() public returns (uint) {
+        checkClosed();
+        return duration;
+    }
+
     function getLastWinner() public returns (address) {
         checkClosed();
         return lastWinner;
@@ -45,17 +63,9 @@ contract DLottery {
         return lastDuration;
     }
 
-    function getLottoData() public returns (uint[3]) {
+    function getLastEndBlock() public returns (uint) {
         checkClosed();
-        // return data about this lotto
-        return [duration, lotteryEndBlock, owners.length];
-    }
-
-    // Called by dapp to check if the auction is over, and
-    //  triggers closeLottery if so
-    function getBlocksRemaining() public returns (uint) {
-        checkClosed();
-        return lotteryEndBlock - block.number;
+        return lastEndBlock;
     }
 
     // 1 ticket = 1 wei
@@ -71,7 +81,7 @@ contract DLottery {
     }
 
     // Called when the lottery end event detected
-    function closeLottery() public {
+    function closeLottery() private {
 
         // if participants, get winner and send winnings
         if (owners.length > 0) {
@@ -84,6 +94,7 @@ contract DLottery {
         lastWinner = winner;
         lastPot = owners.length;
         lastDuration = duration;
+        lastEndBlock = block.number;
 
         // start new lotto
         commenceLottery(duration);
@@ -92,7 +103,7 @@ contract DLottery {
     function checkClosed() private {
         test = 3;
         if (block.number >= lotteryEndBlock) {
-            //closeLottery();
+            closeLottery();
         }
     }
 
