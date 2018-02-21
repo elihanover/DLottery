@@ -21,63 +21,28 @@ contract DLottery {
     // Contract constructor, called when the contract is deployed
     // When launched, make auctions one day long
     function DLottery() public {
-        allTimeBets = 0;
+        allTimeBets = 100;
         test = 0;
         lastWinner = 1;
         lastPot = 1;
-        lastDuration = 1;
-        commenceLottery(1); // 86400 seconds in one day
+        lastDuration = 10;
+        commenceLottery(10); // 86400 seconds in one day
+    }
+
+    // fallback function for when ether received
+    function () payable {
+        for (uint i = 0; i < msg.value; i++) {
+            owners.push(msg.sender);
+            allTimeBets += 1;
+        }
     }
 
     /*
       Interface Functions:
     */
-    function getPotSize() public returns (uint) {
-        checkClosed();
-        return owners.length;
-    }
-
-    // Called by dapp to check if the auction is over, and
-    //  triggers closeLottery if so
-    function getBlocksRemaining() public returns (uint) {
-        checkClosed();
-        return lotteryEndBlock - block.number;
-    }
-
-    // returns duration of this auction in blocks
-    function getDuration() public returns (uint) {
-        checkClosed();
-        return duration;
-    }
-
-    function getLastWinner() public returns (address) {
-        checkClosed();
-        return lastWinner;
-    }
-
-    function getLastPot() public returns (uint) {
-        checkClosed();
-        return lastPot;
-    }
-
-    function getLastDuration() public returns (uint) {
-        checkClosed();
-        return lastDuration;
-    }
-
-    function getLastEndBlock() public returns (uint) {
-        checkClosed();
-        return lastEndBlock;
-    }
-
-    function getAllTimeBets() public returns (uint) {
-        checkClosed();
-        return allTimeBets;
-    }
-
     // 1 ticket = 1 wei
     function buyTickets(uint tickets) public payable returns (uint) {
-        //assert(tickets == msg.value);
+        assert(tickets == msg.value);
         checkClosed();
         //uint tickets = msg.value; // get wei sent
 
@@ -87,6 +52,41 @@ contract DLottery {
             allTimeBets += 1;
         }
         return owners.length;
+    }
+
+    function getPotSize() public returns (uint) {
+        return owners.length;
+    }
+
+    // Called by dapp to check if the auction is over, and
+    //  triggers closeLottery if so
+    function getBlocksRemaining() public returns (uint) {
+        return lotteryEndBlock - block.number;
+    }
+
+    // returns duration of this auction in blocks
+    function getDuration() public returns (uint) {
+        return duration;
+    }
+
+    function getLastWinner() public returns (address) {
+        return lastWinner;
+    }
+
+    function getLastPot() public returns (uint) {
+        return lastPot;
+    }
+
+    function getLastDuration() public returns (uint) {
+        return lastDuration;
+    }
+
+    function getLastEndBlock() public returns (uint) {
+        return lastEndBlock;
+    }
+
+    function getAllTimeBets() public returns (uint) {
+        return allTimeBets;
     }
 
     // Called when the lottery end event detected
@@ -110,7 +110,6 @@ contract DLottery {
     }
 
     function checkClosed() private {
-        test = 3;
         if (block.number >= lotteryEndBlock) {
             closeLottery();
         }
