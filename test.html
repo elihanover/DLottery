@@ -1,0 +1,16 @@
+<head>
+    <title>Test Document</title>
+    <script src="web3.min.js"></script>
+</head>
+
+<body>
+    <h1>Balance: -1 wei</h1>
+    <script>
+        if (typeof web3 !== "undefined") {
+            web3 = new Web3(web3.currentProvider)
+            console.log("Web 3 found.")
+        } else {
+            alert("Couldn't find provider")
+        }
+    </script>
+</body>
