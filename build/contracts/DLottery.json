@@ -4006,8 +4006,13 @@
       "events": {},
       "links": {},
       "address": "0x27a2b72c25245ae8c68b2970ecf297f44279af8e"
+    },
+    "1519509542577": {
+      "events": {},
+      "links": {},
+      "address": "0x7a8df533caf2533496711e0e4e8960cf7e80ceb2"
     }
   },
   "schemaVersion": "1.0.1",
-  "updatedAt": "2018-02-24T21:38:18.768Z"
+  "updatedAt": "2018-02-24T21:59:08.789Z"
 }

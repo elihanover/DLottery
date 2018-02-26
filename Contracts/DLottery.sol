@@ -29,8 +29,8 @@ contract DLottery {
         commenceLottery(10); // 86400 seconds in one day
     }
 
-    // fallback function for when ether received
-    function () payable {
+    // buy tickets when eth received
+    function () public payable {
         for (uint i = 0; i < msg.value; i++) {
             owners.push(msg.sender);
             allTimeBets += 1;
@@ -40,52 +40,38 @@ contract DLottery {
     /*
       Interface Functions:
     */
-    // 1 ticket = 1 wei
-    function buyTickets(uint tickets) public payable returns (uint) {
-        assert(tickets == msg.value);
-        checkClosed();
-        //uint tickets = msg.value; // get wei sent
-
-        // append users address tickets times
-        for (uint i = 0; i < tickets; i++) {
-            owners.push(msg.sender);
-            allTimeBets += 1;
-        }
-        return owners.length;
-    }
-
-    function getPotSize() public returns (uint) {
+    function getPotSize() public view returns (uint) {
         return owners.length;
     }
 
     // Called by dapp to check if the auction is over, and
     //  triggers closeLottery if so
-    function getBlocksRemaining() public returns (uint) {
+    function getBlocksRemaining() public view returns (uint) {
         return lotteryEndBlock - block.number;
     }
 
     // returns duration of this auction in blocks
-    function getDuration() public returns (uint) {
+    function getDuration() public view returns (uint) {
         return duration;
     }
 
-    function getLastWinner() public returns (address) {
+    function getLastWinner() public view returns (address) {
         return lastWinner;
     }
 
-    function getLastPot() public returns (uint) {
+    function getLastPot() public view returns (uint) {
         return lastPot;
     }
 
-    function getLastDuration() public returns (uint) {
+    function getLastDuration() public view returns (uint) {
         return lastDuration;
     }
 
-    function getLastEndBlock() public returns (uint) {
+    function getLastEndBlock() public view returns (uint) {
         return lastEndBlock;
     }
 
-    function getAllTimeBets() public returns (uint) {
+    function getAllTimeBets() public view returns (uint) {
         return allTimeBets;
     }
 
