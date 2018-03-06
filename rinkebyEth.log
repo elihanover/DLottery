@@ -15582,3 +15582,32 @@ INFO [02-26|16:44:30] Stopping Ethereum protocol
 INFO [02-26|16:44:30] Ethereum protocol stopped 
 INFO [02-26|16:44:30] Transaction pool stopped 
 INFO [02-26|16:44:30] Database closed                          database=/Users/eli/Library/Ethereum/rinkeby/geth/chaindata
+INFO [03-06|14:53:49] Maximum peer count                       ETH=25 LES=0 total=25
+INFO [03-06|14:53:49] Starting peer-to-peer node               instance=Geth/v1.8.1-stable/darwin-amd64/go1.10
+INFO [03-06|14:53:49] Allocated cache and file handles         database=/Users/eli/Library/Ethereum/rinkeby/geth/chaindata cache=768 handles=1024
+INFO [03-06|14:53:50] Persisted trie from memory database      nodes=355 size=65.27kB time=335.961µs gcnodes=0 gcsize=0.00B gctime=0s livenodes=1 livesize=0.00B
+INFO [03-06|14:53:50] Initialised chain configuration          config="{ChainID: 4 Homestead: 1 DAO: <nil> DAOSupport: true EIP150: 2 EIP155: 3 EIP158: 3 Byzantium: 1035301 Engine: clique}"
+INFO [03-06|14:53:50] Initialising Ethereum protocol           versions="[63 62]" network=4
+WARN [03-06|14:53:50] Head state missing, repairing chain      number=1840765 hash=fc6bb5…ff14cb
+INFO [03-06|14:53:50] Rewound blockchain to past state         number=1840638 hash=555cc0…8b015e
+INFO [03-06|14:53:50] Loaded most recent local header          number=1840765 hash=fc6bb5…ff14cb td=3406356
+INFO [03-06|14:53:50] Loaded most recent local full block      number=1840638 hash=555cc0…8b015e td=3406102
+INFO [03-06|14:53:50] Loaded most recent local fast block      number=1840765 hash=fc6bb5…ff14cb td=3406356
+INFO [03-06|14:53:50] Loaded local transaction journal         transactions=1 dropped=0
+INFO [03-06|14:53:50] Regenerated local transaction journal    transactions=1 accounts=1
+WARN [03-06|14:53:50] Blockchain not empty, fast sync disabled 
+INFO [03-06|14:53:50] Starting P2P networking 
+INFO [03-06|14:53:52] UDP listener up                          self=enode://557989c2a1ab25f8af5ea7c8862b421636f601012b39271ce62aaebbd864ee58e3ea10e28385925b7d1fb1cc7f9c0612b61fa205bf58f10599289737dfb2fa37@24.125.237.211:30303
+INFO [03-06|14:53:52] RLPx listener up                         self=enode://557989c2a1ab25f8af5ea7c8862b421636f601012b39271ce62aaebbd864ee58e3ea10e28385925b7d1fb1cc7f9c0612b61fa205bf58f10599289737dfb2fa37@24.125.237.211:30303
+INFO [03-06|14:53:52] IPC endpoint opened                      url=/Users/eli/Library/Ethereum/rinkeby/geth.ipc
+INFO [03-06|14:53:53] Etherbase automatically configured       address=0x0416a80d7Fb02218BFF069450c92A16CeDa06a93
+INFO [03-06|14:53:56] Mapped network port                      proto=udp extport=30303 intport=30303 interface="UPNP IGDv1-IP1"
+INFO [03-06|14:54:19] IPC endpoint closed                      endpoint=/Users/eli/Library/Ethereum/rinkeby/geth.ipc
+INFO [03-06|14:54:19] Writing cached state to disk             block=1840511 hash=508125…2ddfb6 root=26b47b…4ab54c
+INFO [03-06|14:54:19] Persisted trie from memory database      nodes=0   size=0.00B   time=3.101µs   gcnodes=0 gcsize=0.00B gctime=0s livenodes=1 livesize=0.00B
+INFO [03-06|14:54:19] Blockchain manager stopped 
+INFO [03-06|14:54:19] Stopping Ethereum protocol 
+INFO [03-06|14:54:19] Ethereum protocol stopped 
+INFO [03-06|14:54:19] Transaction pool stopped 
+INFO [03-06|14:54:19] Database closed                          database=/Users/eli/Library/Ethereum/rinkeby/geth/chaindata
+INFO [03-06|14:54:20] Got interrupt, shutting down... 

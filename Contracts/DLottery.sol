@@ -30,7 +30,8 @@ contract DLottery {
     }
 
     // buy tickets when eth received
-    function () public payable {
+    function placeBet() public payable {
+        checkClosed();
         for (uint i = 0; i < msg.value; i++) {
             owners.push(msg.sender);
             allTimeBets += 1;
@@ -80,16 +81,17 @@ contract DLottery {
 
         // if participants, get winner and send winnings
         if (owners.length > 0) {
-            uint windex = uint(block.blockhash(block.number-1)) % owners.length;
+            uint windex = uint(keccak256(block.blockhash(block.number))) % owners.length;
             address winner = owners[windex];
-            winner.send(lastPot); // send ether to winner
-        }
 
-        // update info because lotto closed
-        lastWinner = winner;
-        lastPot = owners.length;
-        lastDuration = duration;
-        lastEndBlock = block.number;
+            // update info because lotto closed
+            lastWinner = winner;
+            lastPot = owners.length;
+            lastDuration = duration;
+            lastEndBlock = block.number;
+
+            winner.transfer(lastPot); // send ether to winner
+        }
 
         // start new lotto
         commenceLottery(duration);

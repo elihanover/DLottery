@@ -1,5 +1,3 @@
-//Web3 = require('web3');
-
 // metamask injects web3
 if (typeof web3 !== 'undefined') {
     web3 = new Web3(Web3.currentProvider);
@@ -7,30 +5,28 @@ if (typeof web3 !== 'undefined') {
 } else {
     // set the provider you want from Web3.providers
     web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
-    console.log("didn't exist");
+    //var web3 = new Web3(new Web3.providers.HttpProvider('https://ropsten.infura.io/'));
+    //console.log("ropsten.infura.io");
 }
 
 /* Contract Parameters */
-abi = JSON.parse('[{"constant":true,"inputs":[],"name":"getPotSize","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"owners","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getLastPot","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getLastDuration","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getAllTimeBets","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getBlocksRemaining","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"n\
-ame":"getDuration","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getLastEndBlock","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getLastWinner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"test","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"payable":true,"stateMutability":"payable","type":"fallback"}]');
+abi = JSON.parse('[{"constant":true,"inputs":[],"name":"getPotSize","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"owners","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getLastPot","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getLastDuration","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getAllTimeBets","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getBlocksRemaining","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"nam\
+e":"getDuration","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getLastEndBlock","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getLastWinner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"test","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"placeBet","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"}]');
 DLottoContract = web3.eth.contract(abi);
-contractAddress = '0x90ba859ed0b7484eaca8b00e1c317c8f041044cd';
+contractAddress = '0x481fc4d091b450e2110c0b6eba36ace17bf70cce';
 contractInstance = DLottoContract.at(contractAddress);
-userAddress = web3.eth.accounts[0];
+console.log(contractInstance);
+//userAddress = web3.eth.accounts[0]; // get account from provider
+userAddress = '0xc314CC25F1859BcD3718174178C8fB6554e78B94';
 console.log("Balance: " + web3.eth.getBalance(userAddress));
 // 99999999999984777058 balance
 update();
-log();
 
-
-function log() {
-
-    console.log("PotSize: " + contractInstance.getPotSize.call().toString());
-    console.log("Blocks Left: " + contractInstance.getBlocksRemaining.call().toString());
-    console.log("All Time Bets: " + contractInstance.getAllTimeBets.call().toString());
-}
 
 function update() {
+    // check if lottery closed
+    //contractInstance.checkClosed.call();
+
     // update with current information
     document.getElementById("potSize").innerText = "PotSize: " + contractInstance.getPotSize.call().toString();
     document.getElementById("blocksLeft").innerText = "Blocks Left: " + contractInstance.getBlocksRemaining.call().toString(); // need to call first since updates everything else if closed
@@ -52,9 +48,7 @@ function buyTickets() {
     console.log("amount: " + amount);
 
     // then buy that much ether from the account
-    //web3.eth.sendTransaction({from: web3.eth.coinbase, to: contractAddress, value: web3.toWei(amount, "wei")});
-    contractInstance.buyTickets.sendTransaction(amount, {from: userAddress, value: amount, gas:4700000});
+    contractInstance.placeBet.sendTransaction({from: userAddress, value: amount, gas:4700000});
     console.log(contractInstance.getPotSize.call().toString());
     update();
-    log();
 }
