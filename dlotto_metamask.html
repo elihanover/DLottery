@@ -204,13 +204,13 @@ and is wrapped around the whole page content, except for the footer in this exam
       // then buy that much ether from the account
       web3.personal.unlockAccount(userAddress, 'password', function(error, result){
         if(!error)
-            console.JSON(stringify(result));
+            console.log(JSON.stringify(result));
         else
             console.error(error);
       });
       contractInstance.placeBet.sendTransaction({from: userAddress, value: amount, gas:6700000}, function(error, result){
         if(!error)
-            console.JSON(stringify(result));
+            console.log(JSON.stringify(result));
         else
             console.error(error);
       });
