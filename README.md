@@ -1,5 +1,5 @@
 # DLottery
-A simple decentralized lottery running on the Ethereum blockchain to get familiar with Solidity and Web3.js
+##### A simple decentralized lottery running on the Ethereum blockchain to get familiar with Solidity and Web3.js
 
 ![](http://image.boomsbeat.com/data/images/full/211738/i-m-not-superstitious-but-i-am-a-little-stitious.jpg)
 
